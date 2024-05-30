@@ -34,9 +34,10 @@ public class StackService {
 
     public ApiResponse<StackResponseDTO> save(StackCreateDTO stackCreateDTO) {
         StackEntity stackEntity = modelMapper.map(stackCreateDTO, StackEntity.class);
+        DoctorResponseDTO doctorResponseDTO = selectBestAvailableDoctor(stackCreateDTO.getDoctorSpeciality()).getObject();
         stackEntity.setState(StackState.PENDING);
-        stackEntity.setCreatedDateTime(LocalDateTime.now());
-        stackEntity.setDoctorId(selectBestAvailableDoctor(stackCreateDTO.getDoctorSpeciality()).getObject().getId());
+        stackEntity.setCreatedDateTime(getServiceTime(doctorResponseDTO));
+        stackEntity.setDoctorId(doctorResponseDTO.getId());
         StackResponseDTO stackResponseDTO = modelMapper.map(stackRepository.save(stackEntity), StackResponseDTO.class);
         doctorInterface.addStackToDoctor(stackEntity.getDoctorId(), stackEntity.getId());
         return new ApiResponse<>(stackResponseDTO, "Success", 200);
@@ -109,10 +110,10 @@ public class StackService {
     }
 
 
-    public Duration getServiceTime(DoctorResponseDTO doctorResponseDTO) {
+    public LocalDateTime getServiceTime(DoctorResponseDTO doctorResponseDTO) {
         LocalDateTime nextAvailableTime = getNextAvailableTime(doctorResponseDTO);
         Duration duration = Duration.between(LocalDateTime.now(), nextAvailableTime);
-        return duration;
+        return LocalDateTime.now().plus(duration);
     }
 
 }
