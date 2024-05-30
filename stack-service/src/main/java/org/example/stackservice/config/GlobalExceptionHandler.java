@@ -1,8 +1,6 @@
-package org.example.doctorservice.config;
+package org.example.stackservice.config;
 
-import org.example.doctorservice.exception.AlreadyExistsException;
-import org.example.doctorservice.exception.DataNotFoundException;
-import org.springframework.dao.DataAccessException;
+import org.example.stackservice.exception.DataNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,11 +12,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = DataNotFoundException.class)
     public ResponseEntity<String> dataNotFoundException(DataNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
-
-    @ExceptionHandler(value = AlreadyExistsException.class)
-    public ResponseEntity<String> alreadyExistsException(AlreadyExistsException e) {
-        return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(e.getMessage());
     }
 
 }

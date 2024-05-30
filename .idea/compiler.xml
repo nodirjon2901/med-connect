@@ -7,8 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="patient-service" />
         <module name="balancing-service" />
         <module name="mock-service" />
+        <module name="stack-service" />
         <module name="service-registry" />
         <module name="doctor-service" />
       </profile>
@@ -19,7 +21,9 @@
       <module name="balancing-service" options="-parameters" />
       <module name="doctor-service" options="-parameters" />
       <module name="mock-service" options="-parameters" />
+      <module name="patient-service" options="-parameters" />
       <module name="service-registry" options="-parameters" />
+      <module name="stack-service" options="-parameters" />
     </option>
   </component>
 </project>
